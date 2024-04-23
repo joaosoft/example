@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/joaosoft/dbr"
 	errorCodes "github.com/joaosoft/example/domain/error"
+	"github.com/joaosoft/example/infrastructure/database"
 	"github.com/joaosoft/example/person/domain"
 	"github.com/joaosoft/logger"
 )
@@ -19,7 +20,7 @@ func (m *Repository) GetPersonById(ctx context.Context, id int) (person *domain.
 	person = &domain.Person{}
 
 	stmt := m.db.Select("id_person", "name", "age").
-		From("person").
+		From(database.TablePerson).
 		Where("id_person = ?", id)
 
 	var count int
@@ -38,7 +39,7 @@ func (m *Repository) SavePerson(ctx context.Context, person *domain.SavePerson) 
 	created = &domain.CreatedPerson{}
 	stmt := m.db.Insert().
 		Columns("name", "age").
-		Into("person").
+		Into(database.TablePerson).
 		Return("id_person").
 		Record(person)
 

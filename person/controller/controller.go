@@ -6,7 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	errorCodes "github.com/joaosoft/example/domain/error"
 	httpDomain "github.com/joaosoft/example/domain/http"
-	"github.com/joaosoft/example/http/middlewares"
+	"github.com/joaosoft/example/infrastructure/http/middlewares"
 	controllerDomain "github.com/joaosoft/example/person/controller/domain"
 	"github.com/joaosoft/example/person/domain"
 	"github.com/joaosoft/logger"

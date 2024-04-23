@@ -9,7 +9,7 @@
         },
         "migration": {
           "path": {
-            "database": "schema/db"
+            "database": "schema/database"
           },
           "db": {
             "schema": "example",
