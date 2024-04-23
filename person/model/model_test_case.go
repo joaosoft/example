@@ -3,8 +3,8 @@ package model
 import (
 	"context"
 	errorCodes "github.com/joaosoft/example/domain/error"
-	"github.com/joaosoft/example/domain/person"
 	"github.com/joaosoft/example/domain/test"
+	"github.com/joaosoft/example/person/domain"
 )
 
 type TestCase struct {
@@ -18,7 +18,7 @@ func testCaseGetPersonByIdWithSuccess() *TestCase {
 	idPerson := 1
 
 	// response
-	successResponse := &person.Person{
+	successResponse := &domain.Person{
 		Id:   1,
 		Name: "JOAO",
 		Age:  36,

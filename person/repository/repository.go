@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"github.com/joaosoft/example/domain/person"
+	"github.com/joaosoft/example/person/domain"
 	"math/rand"
 )
 
@@ -11,16 +11,16 @@ type Repository struct {
 	db *sql.DB
 }
 
-func NewRepository(db *sql.DB) person.IRepository {
+func NewRepository(db *sql.DB) domain.IRepository {
 	return &Repository{
 		db: db,
 	}
 }
 
-func (m *Repository) GetPersonById(ctx context.Context, id int) (*person.Person, error) {
-	return &person.Person{
+func (m *Repository) GetPersonById(ctx context.Context, id int) (*domain.Person, error) {
+	return &domain.Person{
 		Id:   id,
-		Name: person.RandomString(10),
+		Name: domain.GenerateName(10),
 		Age:  rand.Intn(100),
 	}, nil
 }

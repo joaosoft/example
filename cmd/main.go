@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"github.com/go-playground/validator/v10"
 	"github.com/joaosoft/example/domain/http"
-	personController "github.com/joaosoft/example/http/controllers/person"
+	personController "github.com/joaosoft/example/person/controller"
 	personModel "github.com/joaosoft/example/person/model"
 	personRepository "github.com/joaosoft/example/person/repository"
 )

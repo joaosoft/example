@@ -23,10 +23,10 @@ func TestGetPersonById(t *testing.T) {
 		test.Repository.Setup(repo)
 
 		// model
-		model := NewModelMock()
+		model := NewModel(repo)
 
 		// model
-		result, err := model.GetPerson(test.Arguments[0].(context.Context), test.Arguments[1].(int))
+		result, err := model.GetPersonById(test.Arguments[0].(context.Context), test.Arguments[1].(int))
 
 		assert.Equal(t, test.Expected[1] == nil, err == nil)    // check nil error
 		assert.Equal(t, test.Expected[0] == nil, result == nil) // check nil result

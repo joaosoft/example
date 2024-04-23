@@ -1,4 +1,4 @@
-package person
+package domain
 
 import (
 	"context"
