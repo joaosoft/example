@@ -6,6 +6,8 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/joaosoft/dbr v0.0.0-20240320135941-0abd881e0c34
+	github.com/joaosoft/logger v0.0.0-20230531142923-753c0a3e836a
+	github.com/joaosoft/manager v0.0.0-20230531143904-428f1ea704a2
 	github.com/stretchr/testify v1.9.0
 )
 
@@ -28,8 +30,6 @@ require (
 	github.com/joaosoft/color v0.0.0-20230531140514-b61c18d53e39 // indirect
 	github.com/joaosoft/errors v0.0.0-20230531141818-ebb38600b462 // indirect
 	github.com/joaosoft/json v0.0.0-20230531142934-29fc4385bd51 // indirect
-	github.com/joaosoft/logger v0.0.0-20230531142923-753c0a3e836a // indirect
-	github.com/joaosoft/manager v0.0.0-20230531143904-428f1ea704a2 // indirect
 	github.com/joaosoft/migration v0.0.0-20230531143955-8d9130f5a39d // indirect
 	github.com/joaosoft/validator v0.0.0-20230531142908-28a5b2f72266 // indirect
 	github.com/joaosoft/web v0.0.0-20230531143830-cd31d8a8c35e // indirect
