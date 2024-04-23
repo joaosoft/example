@@ -69,11 +69,7 @@ func (c *Controller) GetPersonById(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, &PersonResponse{
-		Id:   person.Id,
-		Name: person.Name,
-		Age:  person.Age,
-	})
+	ctx.JSON(http.StatusOK, person.ToResponse())
 }
 
 func (c *Controller) SavePerson(ctx *gin.Context) {
@@ -100,12 +96,7 @@ func (c *Controller) SavePerson(ctx *gin.Context) {
 		return
 	}
 
-	person := &domain.SavePerson{
-		Name: request.Body.Name,
-		Age:  request.Body.Age,
-	}
-
-	id, err := c.model.SavePerson(ctx.Request.Context(), person)
+	created, err := c.model.SavePerson(ctx.Request.Context(), request.ToDomain())
 	if err != nil {
 		if errors.Is(err, &errorCodes.Error{}) {
 			ctx.JSON(http.StatusInternalServerError, err)
@@ -120,7 +111,5 @@ func (c *Controller) SavePerson(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, &CreatedPersonResponse{
-		Id: id,
-	})
+	ctx.JSON(http.StatusOK, created.ToResponse())
 }

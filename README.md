@@ -1,6 +1,6 @@
 # example
 [![Build Status](https://travis-ci.com/joaosoft/example.svg?branch=master)](https://travis-ci.com/joaosoft/example) | [![codecov](https://codecov.io/gh/joaosoft/example/branch/master/graph/badge.svg)](https://codecov.io/gh/joaosoft/example) | [![Go Report Card](https://goreportcard.com/badge/github.com/joaosoft/example)](https://goreportcard.com/report/github.com/joaosoft/example) | [![GoDoc](https://godoc.org/github.com/joaosoft/example?status.svg)](https://godoc.org/github.com/joaosoft/example)
-A simple http server with the base for building a microservice
+A simple project example with the base for building a microservice
 
 ## API
 - `GET` to `/v1/persons/:id`

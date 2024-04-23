@@ -34,16 +34,17 @@ func (m *Repository) GetPersonById(ctx context.Context, id int) (person *domain.
 	return person, nil
 }
 
-func (m *Repository) SavePerson(ctx context.Context, person *domain.SavePerson) (id int, err error) {
+func (m *Repository) SavePerson(ctx context.Context, person *domain.SavePerson) (created *domain.CreatedPerson, err error) {
+	created = &domain.CreatedPerson{}
 	stmt := m.db.Insert().
 		Columns("name", "age").
 		Into("person").
 		Return("id_person").
 		Record(person)
 
-	if _, err = stmt.Load(&id); err != nil {
-		return 0, err
+	if _, err = stmt.Load(&created.Id); err != nil {
+		return nil, err
 	}
 
-	return id, nil
+	return created, nil
 }

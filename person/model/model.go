@@ -17,6 +17,6 @@ func (m *Model) GetPersonById(ctx context.Context, id int) (*domain.Person, erro
 	return m.repository.GetPersonById(ctx, id)
 }
 
-func (m *Model) SavePerson(ctx context.Context, person *domain.SavePerson) (id int, err error) {
+func (m *Model) SavePerson(ctx context.Context, person *domain.SavePerson) (created *domain.CreatedPerson, err error) {
 	return m.repository.SavePerson(ctx, person)
 }

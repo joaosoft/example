@@ -14,10 +14,10 @@ type IController interface {
 
 type IModel interface {
 	GetPersonById(ctx context.Context, id int) (*Person, error)
-	SavePerson(ctx context.Context, person *SavePerson) (id int, err error)
+	SavePerson(ctx context.Context, person *SavePerson) (created *CreatedPerson, err error)
 }
 
 type IRepository interface {
 	GetPersonById(ctx context.Context, id int) (*Person, error)
-	SavePerson(ctx context.Context, person *SavePerson) (id int, err error)
+	SavePerson(ctx context.Context, person *SavePerson) (created *CreatedPerson, err error)
 }

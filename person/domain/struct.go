@@ -10,3 +10,7 @@ type SavePerson struct {
 	Name string `json:"name" db:"name"`
 	Age  int    `json:"age" db:"age"`
 }
+
+type CreatedPerson struct {
+	Id int `json:"id"`
+}

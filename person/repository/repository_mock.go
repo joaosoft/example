@@ -18,7 +18,10 @@ func (m *RepositoryMock) GetPersonById(ctx context.Context, id int) (*domain.Per
 	return args.Get(0).(*domain.Person), args.Error(1)
 }
 
-func (m *RepositoryMock) SavePerson(ctx context.Context, person *domain.SavePerson) (id int, err error) {
+func (m *RepositoryMock) SavePerson(ctx context.Context, person *domain.SavePerson) (created *domain.CreatedPerson, err error) {
 	args := m.Called(ctx, person)
-	return args.Get(0).(int), args.Error(1)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*domain.CreatedPerson), args.Error(1)
 }
