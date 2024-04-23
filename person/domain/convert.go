@@ -1,25 +1,34 @@
 package domain
 
-import "github.com/joaosoft/example/person/controller"
+import controllerDomain "github.com/joaosoft/example/person/controller/domain"
 
-func (p *Person) ToResponse() *controller.PersonResponse {
+func (p *Person) ToResponse() *controllerDomain.PersonResponse {
 	if p == nil {
 		return nil
 	}
 
-	return &controller.PersonResponse{
+	return &controllerDomain.PersonResponse{
 		Id:   p.Id,
 		Name: p.Name,
 		Age:  p.Age,
 	}
 }
 
-func (p *CreatedPerson) ToResponse() *controller.CreatedPersonResponse {
+func (p *CreatedPerson) ToResponse() *controllerDomain.CreatedPersonResponse {
 	if p == nil {
 		return nil
 	}
 
-	return &controller.CreatedPersonResponse{
+	return &controllerDomain.CreatedPersonResponse{
 		Id: p.Id,
 	}
+}
+
+func (p *SavePerson) FromRequest(request *controllerDomain.SavePersonRequest) {
+	if p == nil {
+		return
+	}
+
+	p.Name = request.Body.Name
+	p.Age = request.Body.Age
 }

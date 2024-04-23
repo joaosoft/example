@@ -12,8 +12,8 @@ import (
 )
 
 type Example struct {
-	db        *dbr.Dbr
 	logger    logger.ILogger
+	db        *dbr.Dbr
 	validator *validator.Validate
 	config    *example.ExampleConfig
 }

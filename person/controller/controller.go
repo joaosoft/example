@@ -7,6 +7,7 @@ import (
 	errorCodes "github.com/joaosoft/example/domain/error"
 	httpDomain "github.com/joaosoft/example/domain/http"
 	"github.com/joaosoft/example/http/middlewares"
+	controllerDomain "github.com/joaosoft/example/person/controller/domain"
 	"github.com/joaosoft/example/person/domain"
 	"github.com/joaosoft/logger"
 	"net/http"
@@ -16,6 +17,7 @@ func NewController(model domain.IModel, validator *validator.Validate, log logge
 	return &Controller{
 		model:     model,
 		validator: validator,
+		log:       log,
 	}
 }
 
@@ -33,7 +35,7 @@ func (c *Controller) Register(router *gin.Engine) {
 func (c *Controller) GetPersonById(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
-	request := GetPersonByIDRequest{}
+	request := controllerDomain.GetPersonByIDRequest{}
 	if err := ctx.ShouldBindUri(&request); err != nil {
 		ctx.JSON(http.StatusBadRequest,
 			errorCodes.Error{
@@ -75,7 +77,7 @@ func (c *Controller) GetPersonById(ctx *gin.Context) {
 func (c *Controller) SavePerson(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
-	request := SavePersonRequest{}
+	request := &controllerDomain.SavePersonRequest{}
 	if err := ctx.ShouldBindJSON(&request.Body); err != nil {
 		ctx.JSON(http.StatusBadRequest,
 			errorCodes.Error{
@@ -96,7 +98,10 @@ func (c *Controller) SavePerson(ctx *gin.Context) {
 		return
 	}
 
-	created, err := c.model.SavePerson(ctx.Request.Context(), request.ToDomain())
+	person := &domain.SavePerson{}
+	person.FromRequest(request)
+
+	created, err := c.model.SavePerson(ctx.Request.Context(), person)
 	if err != nil {
 		if errors.Is(err, &errorCodes.Error{}) {
 			ctx.JSON(http.StatusInternalServerError, err)

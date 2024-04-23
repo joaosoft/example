@@ -1,4 +1,4 @@
-package controller
+package domain
 
 type PersonResponse struct {
 	Id   int    `json:"id"`
