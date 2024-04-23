@@ -8,12 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Server struct {
-	app    *http.Server
-	router *gin.Engine
-	port   int
-}
-
 func New(port int) *Server {
 	gin.SetMode(gin.DebugMode)
 
@@ -38,12 +32,13 @@ func (s *Server) Controllers(controllers ...IRegister) *Server {
 	}
 
 	s.router.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, struct {
+		errorCode := http.StatusNotFound
+		c.JSON(errorCode, struct {
 			Code  int    `json:"code"`
 			Error string `json:"error"`
 		}{
-			Code:  http.StatusNotFound,
-			Error: http.StatusText(http.StatusNotFound),
+			Code:  errorCode,
+			Error: http.StatusText(errorCode),
 		})
 	})
 

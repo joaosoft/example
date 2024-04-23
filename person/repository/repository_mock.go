@@ -3,15 +3,10 @@ package repository
 import (
 	"context"
 	"github.com/joaosoft/example/person/domain"
-	"github.com/stretchr/testify/mock"
 )
 
 func NewRepositoryMock() *RepositoryMock {
 	return &RepositoryMock{}
-}
-
-type RepositoryMock struct {
-	mock.Mock
 }
 
 func (m *RepositoryMock) GetPersonById(ctx context.Context, id int) (*domain.Person, error) {

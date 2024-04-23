@@ -11,11 +11,6 @@ import (
 	"net/http"
 )
 
-type Controller struct {
-	validator *validator.Validate
-	model     domain.IModel
-}
-
 func NewController(validator *validator.Validate, model domain.IModel) domain.IController {
 	return &Controller{
 		validator: validator,

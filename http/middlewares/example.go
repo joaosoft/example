@@ -8,5 +8,6 @@ import (
 func CheckExample(ctx *gin.Context) {
 	// do something
 	fmt.Println("check middleware")
+
 	ctx.Next()
 }

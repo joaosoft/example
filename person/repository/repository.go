@@ -7,10 +7,6 @@ import (
 	"math/rand"
 )
 
-type Repository struct {
-	db *sql.DB
-}
-
 func NewRepository(db *sql.DB) domain.IRepository {
 	return &Repository{
 		db: db,

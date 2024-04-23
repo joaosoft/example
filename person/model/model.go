@@ -5,10 +5,6 @@ import (
 	"github.com/joaosoft/example/person/domain"
 )
 
-type Model struct {
-	repository domain.IRepository
-}
-
 func NewModel(repository domain.IRepository) domain.IModel {
 	return &Model{
 		repository: repository,

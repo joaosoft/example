@@ -7,11 +7,6 @@ import (
 	"github.com/joaosoft/example/person/domain"
 )
 
-type TestCase struct {
-	test.BaseTestCase
-	Repository test.MapCall
-}
-
 func testCaseGetPersonByIdWithSuccess() *TestCase {
 	// request
 	ctx := context.Background()

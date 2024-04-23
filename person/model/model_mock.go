@@ -3,15 +3,11 @@ package model
 import (
 	"context"
 	"github.com/joaosoft/example/person/domain"
-	"github.com/stretchr/testify/mock"
 )
 
 func NewModelMock() *ModelMock {
-	return &ModelMock{}
-}
 
-type ModelMock struct {
-	mock.Mock
+	return &ModelMock{}
 }
 
 func (m *ModelMock) GetPersonById(ctx context.Context, id int) (*domain.Person, error) {
