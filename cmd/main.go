@@ -1,25 +1,9 @@
 package main
 
-import (
-	"database/sql"
-	"github.com/go-playground/validator/v10"
-	"github.com/joaosoft/example/domain/http"
-	personController "github.com/joaosoft/example/person/controller"
-	personModel "github.com/joaosoft/example/person/model"
-	personRepository "github.com/joaosoft/example/person/repository"
-)
+import example "github.com/joaosoft/example/app"
 
 func main() {
-	var db *sql.DB
-	repository := personRepository.NewRepository(db)
-	model := personModel.NewModel(repository)
-	validator := validator.New()
-	controller := personController.NewController(validator, model)
-
-	if err := http.
-		New(8081).
-		Controllers(controller).
-		Start(); err != nil {
+	if _, err := example.NewExample(); err != nil {
 		panic(err)
 	}
 }

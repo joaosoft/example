@@ -8,13 +8,14 @@ import (
 	httpDomain "github.com/joaosoft/example/domain/http"
 	"github.com/joaosoft/example/http/middlewares"
 	"github.com/joaosoft/example/person/domain"
+	"github.com/joaosoft/logger"
 	"net/http"
 )
 
-func NewController(validator *validator.Validate, model domain.IModel) domain.IController {
+func NewController(model domain.IModel, validator *validator.Validate, log logger.ILogger) domain.IController {
 	return &Controller{
-		validator: validator,
 		model:     model,
+		validator: validator,
 	}
 }
 
@@ -26,6 +27,7 @@ func (c *Controller) Register(router *gin.Engine) {
 	v1Persons.Use(middlewares.CheckExample)
 
 	v1Persons.Handle(http.MethodGet, "/:id", c.GetPersonById)
+	v1Persons.Handle(http.MethodPost, "", c.SavePerson)
 }
 
 func (c *Controller) GetPersonById(ctx *gin.Context) {
@@ -67,5 +69,58 @@ func (c *Controller) GetPersonById(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, person)
+	ctx.JSON(http.StatusOK, &PersonResponse{
+		Id:   person.Id,
+		Name: person.Name,
+		Age:  person.Age,
+	})
+}
+
+func (c *Controller) SavePerson(ctx *gin.Context) {
+	ctx.Header("Content-Type", "application/json")
+
+	request := SavePersonRequest{}
+	if err := ctx.ShouldBindJSON(&request.Body); err != nil {
+		ctx.JSON(http.StatusBadRequest,
+			errorCodes.Error{
+				Code:    http.StatusBadRequest,
+				Message: err.Error(),
+				Level:   errorCodes.LevelError,
+			})
+		return
+	}
+
+	if err := c.validator.Struct(request); err != nil {
+		ctx.JSON(http.StatusBadRequest,
+			errorCodes.Error{
+				Code:    http.StatusBadRequest,
+				Message: err.Error(),
+				Level:   errorCodes.LevelError,
+			})
+		return
+	}
+
+	person := &domain.SavePerson{
+		Name: request.Body.Name,
+		Age:  request.Body.Age,
+	}
+
+	id, err := c.model.SavePerson(ctx.Request.Context(), person)
+	if err != nil {
+		if errors.Is(err, &errorCodes.Error{}) {
+			ctx.JSON(http.StatusInternalServerError, err)
+		} else {
+			err := &errorCodes.Error{
+				Code:    http.StatusBadRequest,
+				Message: err.Error(),
+				Level:   errorCodes.LevelError,
+			}
+			ctx.JSON(http.StatusInternalServerError, err)
+		}
+		return
+	}
+
+	ctx.JSON(http.StatusOK, &CreatedPersonResponse{
+		Id: id,
+	})
 }

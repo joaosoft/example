@@ -1,12 +1,14 @@
 package repository
 
 import (
-	"database/sql"
+	"github.com/joaosoft/dbr"
+	"github.com/joaosoft/logger"
 	"github.com/stretchr/testify/mock"
 )
 
 type Repository struct {
-	db *sql.DB
+	db  *dbr.Dbr
+	log logger.ILogger
 }
 
 type RepositoryMock struct {

@@ -9,12 +9,15 @@ import (
 type IController interface {
 	http.IRegister
 	GetPersonById(ctx *gin.Context)
+	SavePerson(ctx *gin.Context)
 }
 
 type IModel interface {
 	GetPersonById(ctx context.Context, id int) (*Person, error)
+	SavePerson(ctx context.Context, person *SavePerson) (id int, err error)
 }
 
 type IRepository interface {
 	GetPersonById(ctx context.Context, id int) (*Person, error)
+	SavePerson(ctx context.Context, person *SavePerson) (id int, err error)
 }

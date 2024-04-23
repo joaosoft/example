@@ -2,21 +2,48 @@ package repository
 
 import (
 	"context"
-	"database/sql"
+	"github.com/joaosoft/dbr"
+	errorCodes "github.com/joaosoft/example/domain/error"
 	"github.com/joaosoft/example/person/domain"
-	"math/rand"
+	"github.com/joaosoft/logger"
 )
 
-func NewRepository(db *sql.DB) domain.IRepository {
+func NewRepository(db *dbr.Dbr, log logger.ILogger) domain.IRepository {
 	return &Repository{
-		db: db,
+		db:  db,
+		log: log,
 	}
 }
 
-func (m *Repository) GetPersonById(ctx context.Context, id int) (*domain.Person, error) {
-	return &domain.Person{
-		Id:   id,
-		Name: domain.GenerateName(10),
-		Age:  rand.Intn(100),
-	}, nil
+func (m *Repository) GetPersonById(ctx context.Context, id int) (person *domain.Person, err error) {
+	person = &domain.Person{}
+
+	stmt := m.db.Select("id_person", "name", "age").
+		From("person").
+		Where("id_person = ?", id)
+
+	var count int
+	if count, err = stmt.Load(person); err != nil {
+		return nil, err
+	}
+
+	if count == 0 {
+		return nil, errorCodes.ErrorNotFound()
+	}
+
+	return person, nil
+}
+
+func (m *Repository) SavePerson(ctx context.Context, person *domain.SavePerson) (id int, err error) {
+	stmt := m.db.Insert().
+		Columns("name", "age").
+		Into("person").
+		Return("id_person").
+		Record(person)
+
+	if _, err = stmt.Load(&id); err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }

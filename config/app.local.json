@@ -1,0 +1,25 @@
+{
+    "example": {
+      "port": 8081,
+      "dbr": {
+        "db": {
+          "schema": "example",
+          "driver": "postgres",
+          "datasource": "postgres://yonderland:password@localhost:5432/postgres?sslmode=disable&search_path=example"
+        },
+        "migration": {
+          "path": {
+            "database": "schema/db"
+          },
+          "db": {
+            "schema": "example",
+            "driver": "postgres",
+            "datasource": "postgres://yonderland:password@localhost:5432/postgres?sslmode=disable&search_path=example"
+          }
+        }
+      },
+      "log": {
+        "level": "info"
+      }
+    }
+}
